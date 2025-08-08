@@ -9,12 +9,15 @@
     "prebuild": "EXPO_TV=1 expo prebuild --clean"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.9",
     "expo": "^53.0.16",
     "expo-splash-screen": "~0.30.6",
     "expo-status-bar": "~2.2.2",
+    "graphql": "^16.11.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-native": "npm:react-native-tvos@0.79.5-0"
+    "react-native": "npm:react-native-tvos@0.79.5-0",
+    "react-tv-space-navigation": "^6.0.0-beta1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
