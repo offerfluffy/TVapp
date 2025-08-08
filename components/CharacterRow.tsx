@@ -1,10 +1,13 @@
-import { SpatialNavigationScrollView } from "react-tv-space-navigation";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  SpatialNavigationScrollView,
+  DefaultFocus,
+} from "react-tv-space-navigation";
+import { StyleSheet, Text } from "react-native";
 import { useQuery, gql } from "@apollo/client";
 import CharacterCard from "./CharacterCard";
 
 const GET_CHARACTERS = gql`
-  query {
+  query GetCharacters {
     characters(page: 1) {
       results {
         id
@@ -15,13 +18,8 @@ const GET_CHARACTERS = gql`
   }
 `;
 
-const CharactersRow = () => {
+const CharactersRow = ({ handleSelect }) => {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
-
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error.message}</Text>;
-
-  const limited = data?.characters?.results?.slice(0, 10) ?? [];
 
   return (
     <SpatialNavigationScrollView
@@ -29,17 +27,47 @@ const CharactersRow = () => {
       offsetFromStart={20}
       contentContainerStyle={styles.row}
     >
-      {limited.map(({ id, name, image }) => (
-        <CharacterCard key={id} name={name} img={image} />
-      ))}
+      {loading ? (
+        <Text style={styles.statusText}>Loading characters...</Text>
+      ) : error ? (
+        <Text style={styles.statusText}>Error: {error.message}</Text>
+      ) : (
+        data?.characters?.results.map(({ id, image }) =>
+          id === 1 ? (
+            <DefaultFocus>
+              <CharacterCard
+                key={id}
+                img={image}
+                id={id}
+                handleSelect={handleSelect}
+              />
+            </DefaultFocus>
+          ) : (
+            <CharacterCard
+              key={id}
+              img={image}
+              id={id}
+              handleSelect={handleSelect}
+            />
+          )
+        )
+      )}
     </SpatialNavigationScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   row: {
+    position: "absolute",
+    bottom: 20,
     flexDirection: "row",
     paddingHorizontal: 20,
+  },
+  statusText: {
+    padding: 20,
+    fontSize: 18,
+    color: "black",
+    textAlign: "center",
   },
 });
 
