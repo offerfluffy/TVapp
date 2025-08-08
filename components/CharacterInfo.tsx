@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
   infoContainer: {
     padding: 20,
     alignItems: "center",
+    justifyContent: "center",
+    flex: 1
   },
   image: {
     width: 200,

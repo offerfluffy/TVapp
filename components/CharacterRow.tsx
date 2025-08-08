@@ -23,7 +23,7 @@ const CharactersRow = ({ handleSelect }) => {
 
   return (
     <SpatialNavigationScrollView
-      horizontal
+      horizontal={true}
       offsetFromStart={20}
       contentContainerStyle={styles.row}
     >

@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Pressable } from "react-native";
 import { SpatialNavigationNode } from "react-tv-space-navigation";
 import { useEffect } from "react";
 
@@ -12,10 +12,12 @@ const CharacterCard = ({ img, id, handleSelect }) => (
       }, [isFocused]);
 
       return (
-        <Image
-          source={{ uri: img }}
-          style={[styles.card, isFocused && styles.cardFocused]}
-        />
+        <Pressable>
+          <Image
+            source={{ uri: img }}
+            style={[styles.card, isFocused && styles.cardFocused]}
+          />
+        </Pressable>
       );
     }}
   </SpatialNavigationNode>
