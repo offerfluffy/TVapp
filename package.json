@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.9",
+    "@expo-google-fonts/inter": "^0.4.1",
+    "@react-native-community/blur": "^4.4.1",
     "expo": "^53.0.16",
+    "expo-blur": "^14.1.5",
+    "expo-font": "~13.3.2",
     "expo-splash-screen": "~0.30.6",
     "expo-status-bar": "~2.2.2",
     "graphql": "^16.11.0",

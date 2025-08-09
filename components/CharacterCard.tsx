@@ -3,10 +3,7 @@ import { Pressable, Image, StyleSheet } from "react-native";
 
 const CharacterCard = ({ img, id, handleSelect }) => {
   return (
-    <SpatialNavigationNode
-      isFocusable
-      onFocus={() => handleSelect(id)}
-    >
+    <SpatialNavigationNode isFocusable onFocus={() => handleSelect(id)}>
       {({ isFocused }) => (
         <Pressable>
           <Image
@@ -23,14 +20,15 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#444",
     borderRadius: 12,
-    height: 250,
-    width: 180,
-    marginRight: 12,
-    borderWidth: 2,
+    height: 230,
+    width: 410,
     borderColor: "transparent",
   },
   cardFocused: {
-    borderColor: "red",
+    shadowColor: 'rgb(66, 68, 90)',
+    shadowOffset: { width: 14, height: 17 },
+    shadowOpacity: 0.12,
+    shadowRadius: 14,
     transform: [{ scale: 1.04 }],
   },
 });

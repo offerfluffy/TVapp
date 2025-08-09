@@ -16,7 +16,7 @@ const GET_CHARACTERS = gql`
   }
 `;
 
-const ITEM_WIDTH = 190;
+const ITEM_WIDTH = 435;
 
 const CharactersRow = ({ selectedChar, handleSelect }) => {
   const [page, setPage] = useState(1);
@@ -84,7 +84,7 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
             itemSize={ITEM_WIDTH}
             orientation="horizontal"
             onEndReached={handleEndReached}
-            onEndReachedThresholdItemsNumber={8}
+            onEndReachedThresholdItemsNumber={3}
             scrollBehavior="stick-to-start"
             style={styles.row}
           />
@@ -102,7 +102,7 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
 const styles = StyleSheet.create({
   row: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 30,
   },
   statusText: {
     padding: 20,
@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(0,0,0,0.6)",
   },
   spinnerText: {
     fontSize: 18,
-    color: "black",
+    color: "gray",
   },
 });
 
