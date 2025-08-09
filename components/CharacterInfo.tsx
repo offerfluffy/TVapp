@@ -1,6 +1,13 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-
+import { StyleSheet, View, Image } from "react-native";
 import { useQuery, gql } from "@apollo/client";
+import { useEffect } from "react";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+  ReduceMotion,
+} from "react-native-reanimated";
 
 const GET_CHARACTER_BY_ID = gql`
   query GetCharacterByID($id: ID!) {
@@ -20,73 +27,126 @@ const CharacterInfo = ({ selectedChar }) => {
   const { loading, error, data } = useQuery(GET_CHARACTER_BY_ID, {
     variables: { id: selectedChar },
   });
+  const opacity = useSharedValue(0);
+
+  const opacityStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  useEffect(() => {
+    if (data?.character) {
+      opacity.value = 0;
+
+      opacity.value = withTiming(1, {
+        duration: 500,
+        easing: Easing.ease,
+        reduceMotion: ReduceMotion.System,
+      });
+    }
+  }, [data]);
 
   if (loading) {
-    return <Text style={styles.statusText}>Loading character...</Text>;
+    return (
+      <View style={styles.center}>
+        <Animated.Text style={styles.loadingText}>
+          Loading character...
+        </Animated.Text>
+      </View>
+    );
   }
 
   if (error) {
-    return <Text style={styles.statusText}>Error: {error.message}</Text>;
+    return (
+      <View style={styles.center}>
+        <Animated.Text style={styles.loadingText}>
+          Error: {error.message}
+        </Animated.Text>
+      </View>
+    );
   }
 
   const { name, image, status, species, origin } = data.character;
 
   return (
-    <View style={styles.infoContainer}>
-      <View style={styles.nameDetailsContainer}>
-        <Text style={styles.name}>{name}</Text>
-        <View style={styles.detailsContiner}>
-          <Text style={styles.detail}>Species: {species} </Text>
-          <Text style={styles.detail}>Status: {status} </Text>
-          <Text style={styles.detail}>Origin: {origin.name} </Text>
-        </View>
-        <Text style={[styles.detail, {marginTop: 25}]}>
+    <View style={styles.container}>
+      <View style={styles.detailsBlock}>
+        <Animated.Text style={[styles.characterName, opacityStyle]}>
+          {name}
+        </Animated.Text>
+        <Animated.View style={opacityStyle}>
+          <View style={styles.metaGroup}>
+            <Animated.Text style={styles.metaText}>
+              Species: {species}
+            </Animated.Text>
+            <Animated.Text style={styles.metaText}>
+              Status: {status}
+            </Animated.Text>
+            <Animated.Text style={styles.metaText}>
+              Origin: {origin.name}
+            </Animated.Text>
+          </View>
+        </Animated.View>
+        <Animated.Text style={[styles.description, opacityStyle]}>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat
           facilis expedita earum deserunt recusandae? Repellat porro
           perspiciatis fuga cum, vero cumque ab reiciendis doloremque at animi?
           Nemo animi voluptatum sapiente?
-        </Text>
+        </Animated.Text>
       </View>
-      <Image source={{ uri: image }} style={styles.image} />
+      <Animated.Image
+        source={{ uri: image }}
+        style={styles.characterImage}
+      />
     </View>
   );
 };
 
-export default CharacterInfo;
-
 const styles = StyleSheet.create({
-  infoContainer: {
+  container: {
     padding: 20,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  image: {
+  detailsBlock: {
+    flexDirection: "column",
+    maxWidth: 800,
+  },
+  characterImage: {
     width: 400,
     height: 400,
     borderRadius: 12,
+    backgroundColor: "#444",
   },
-  name: {
+  characterName: {
     fontSize: 57,
     color: "white",
   },
-  nameDetailsContainer: {
-    flexDirection: "column",
-    maxWidth: 800
+  metaGroup: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 20,
   },
-  detail: {
+  metaText: {
     fontSize: 29,
     color: "white",
-    marginTop: 20,
     marginRight: 20,
   },
-  detailsContiner: {
-    flexDirection: "row",
-    flexWrap: "wrap"
+  description: {
+    fontSize: 29,
+    color: "white",
+    marginTop: 25,
   },
-  statusText: {
+  loadingText: {
     padding: 20,
     fontSize: 18,
     color: "black",
     textAlign: "center",
   },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
 });
+
+export default CharacterInfo;

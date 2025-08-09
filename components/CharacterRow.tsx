@@ -16,7 +16,7 @@ const GET_CHARACTERS = gql`
   }
 `;
 
-const ITEM_WIDTH = 435;
+const ITEM_WIDTH = 440;
 
 const CharactersRow = ({ selectedChar, handleSelect }) => {
   const [page, setPage] = useState(1);

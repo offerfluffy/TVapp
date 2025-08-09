@@ -21,7 +21,9 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "npm:react-native-tvos@0.79.5-0",
-    "react-tv-space-navigation": "^6.0.0-beta1"
+    "react-tv-space-navigation": "^6.0.0-beta1",
+    "expo-linear-gradient": "~14.1.5",
+    "react-native-reanimated": "~3.17.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

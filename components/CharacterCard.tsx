@@ -1,14 +1,43 @@
 import { SpatialNavigationNode } from "react-tv-space-navigation";
-import { Pressable, Image, StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+  ReduceMotion,
+} from "react-native-reanimated";
 
 const CharacterCard = ({ img, id, handleSelect }) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const animateTo = (to: number) => {
+    "worklet";
+    scale.value = withTiming(to, {
+      duration: 340,
+      easing: Easing.ease,
+      reduceMotion: ReduceMotion.System,
+    });
+  };
+
   return (
-    <SpatialNavigationNode isFocusable onFocus={() => handleSelect(id)}>
-      {({ isFocused }) => (
+    <SpatialNavigationNode
+      isFocusable
+      onFocus={() => {
+        handleSelect(id);
+        animateTo(1.07);
+      }}
+      onBlur={() => animateTo(1)}
+    >
+      {() => (
         <Pressable>
-          <Image
+          <Animated.Image
             source={{ uri: img }}
-            style={[styles.card, isFocused && styles.cardFocused]}
+            style={[styles.card, animatedStyle]}
           />
         </Pressable>
       )}
@@ -23,13 +52,6 @@ const styles = StyleSheet.create({
     height: 230,
     width: 410,
     borderColor: "transparent",
-  },
-  cardFocused: {
-    shadowColor: 'rgb(66, 68, 90)',
-    shadowOffset: { width: 14, height: 17 },
-    shadowOpacity: 0.12,
-    shadowRadius: 14,
-    transform: [{ scale: 1.04 }],
   },
 });
 
