@@ -43,9 +43,12 @@ const CharacterInfo = ({ selectedChar }) => {
   }));
 
   useEffect(() => {
-    if (data?.character) {
-      imageOpacity.value = 0;
-      textOpacity.value = 0;
+    imageOpacity.value = 0;
+    textOpacity.value = 0;
+  }, [selectedChar]);
+
+  useEffect(() => {
+    if (data?.character && !loading) {
 
       imageOpacity.value = withTiming(1, {
         duration: 250,
@@ -62,7 +65,7 @@ const CharacterInfo = ({ selectedChar }) => {
         })
       );
     }
-  }, [data?.character]);
+  }, [data?.character, loading]);
 
   if (loading) {
     return <></>;
