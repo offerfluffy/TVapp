@@ -1,8 +1,10 @@
 import { SpatialNavigationVirtualizedList } from "react-tv-space-navigation";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { useQuery, gql } from "@apollo/client";
-import CharacterCard from "./CharacterCard";
 import { useEffect, useState, useRef } from "react";
+
+import CharacterCard from "./CharacterCard";
+import Spinner from "./UI/Spinner";
 
 const GET_CHARACTERS = gql`
   query GetCharacters($page: Int!) {
@@ -49,14 +51,19 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
   }, [data]);
 
   useEffect(() => {
-    if (!characters.length || selectedChar == null) return;
-    const idx = characters.findIndex((c) => c.id === selectedChar);
-    if (idx >= 0) listRef.current?.focus(idx);
+    if (!characters.length) return;
+    if (selectedChar == null) {
+      // No selection yet → auto focus first card
+      listRef.current?.focus(0);
+    } else {
+      const idx = characters.findIndex((c) => c.id === selectedChar);
+      if (idx >= 0) listRef.current?.focus(idx);
+    }
   }, [characters.length, selectedChar]);
 
   const handleEndReached = () => {
-    if (loading) return; 
-    if (!hasMore) return; 
+    if (loading) return;
+    if (!hasMore) return;
     if (isFetchingMoreRef.current) return;
 
     isFetchingMoreRef.current = true;
@@ -66,9 +73,9 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
   return (
     <>
       {isInitialLoading ? (
-        <Text style={styles.statusText}>Loading characters...</Text>
+        <Spinner />
       ) : error ? (
-        <Text style={styles.statusText}>Error: {error.message}</Text>
+        <Spinner />
       ) : (
         <View style={{ position: "relative" }}>
           <SpatialNavigationVirtualizedList
@@ -88,11 +95,7 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
             scrollBehavior="stick-to-start"
             style={styles.row}
           />
-          {loading && (
-            <View style={styles.spinnerOverlay}>
-              <Text style={styles.spinnerText}>Loading more characters...</Text>
-            </View>
-          )}
+          {loading && <Spinner />}
         </View>
       )}
     </>
@@ -103,26 +106,6 @@ const styles = StyleSheet.create({
   row: {
     paddingHorizontal: 20,
     paddingVertical: 30,
-  },
-  statusText: {
-    padding: 20,
-    fontSize: 18,
-    color: "black",
-    textAlign: "center",
-  },
-  spinnerOverlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.6)",
-  },
-  spinnerText: {
-    fontSize: 18,
-    color: "gray",
   },
 });
 

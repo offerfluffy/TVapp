@@ -5,9 +5,12 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  withDelay,
   Easing,
   ReduceMotion,
 } from "react-native-reanimated";
+
+import Spinner from "./UI/Spinner";
 
 const GET_CHARACTER_BY_ID = gql`
   query GetCharacterByID($id: ID!) {
@@ -27,40 +30,48 @@ const CharacterInfo = ({ selectedChar }) => {
   const { loading, error, data } = useQuery(GET_CHARACTER_BY_ID, {
     variables: { id: selectedChar },
   });
-  const opacity = useSharedValue(0);
 
-  const opacityStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
+  const imageOpacity = useSharedValue(0);
+  const textOpacity = useSharedValue(0);
+
+  const imageStyle = useAnimatedStyle(() => ({
+    opacity: imageOpacity.value,
+  }));
+
+  const textStyle = useAnimatedStyle(() => ({
+    opacity: textOpacity.value,
   }));
 
   useEffect(() => {
     if (data?.character) {
-      opacity.value = 0;
+      imageOpacity.value = 0;
+      textOpacity.value = 0;
 
-      opacity.value = withTiming(1, {
-        duration: 500,
+      imageOpacity.value = withTiming(1, {
+        duration: 250,
         easing: Easing.ease,
         reduceMotion: ReduceMotion.System,
       });
+
+      textOpacity.value = withDelay(
+        100,
+        withTiming(1, {
+          duration: 350,
+          easing: Easing.ease,
+          reduceMotion: ReduceMotion.System,
+        })
+      );
     }
   }, [data]);
 
   if (loading) {
-    return (
-      <View style={styles.center}>
-        <Animated.Text style={styles.loadingText}>
-          Loading character...
-        </Animated.Text>
-      </View>
-    );
+    return null;
   }
 
   if (error) {
     return (
       <View style={styles.center}>
-        <Animated.Text style={styles.loadingText}>
-          Error: {error.message}
-        </Animated.Text>
+        <Spinner />
       </View>
     );
   }
@@ -70,10 +81,10 @@ const CharacterInfo = ({ selectedChar }) => {
   return (
     <View style={styles.container}>
       <View style={styles.detailsBlock}>
-        <Animated.Text style={[styles.characterName, opacityStyle]}>
+        <Animated.Text style={[styles.characterName, textStyle]}>
           {name}
         </Animated.Text>
-        <Animated.View style={opacityStyle}>
+        <Animated.View style={textStyle}>
           <View style={styles.metaGroup}>
             <Animated.Text style={styles.metaText}>
               Species: {species}
@@ -86,16 +97,17 @@ const CharacterInfo = ({ selectedChar }) => {
             </Animated.Text>
           </View>
         </Animated.View>
-        <Animated.Text style={[styles.description, opacityStyle]}>
+        <Animated.Text style={[styles.description, textStyle]}>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat
           facilis expedita earum deserunt recusandae? Repellat porro
           perspiciatis fuga cum, vero cumque ab reiciendis doloremque at animi?
           Nemo animi voluptatum sapiente?
         </Animated.Text>
       </View>
+
       <Animated.Image
         source={{ uri: image }}
-        style={styles.characterImage}
+        style={[styles.characterImage, imageStyle]}
       />
     </View>
   );
@@ -135,12 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 29,
     color: "white",
     marginTop: 25,
-  },
-  loadingText: {
-    padding: 20,
-    fontSize: 18,
-    color: "black",
-    textAlign: "center",
   },
   center: {
     justifyContent: "center",

@@ -4,7 +4,7 @@ import { StyleSheet, View, ImageBackground } from "react-native";
 import "./helpers/configureRemote";
 import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
 import { LinearGradient } from "expo-linear-gradient";
-import Animated from 'react-native-reanimated';
+import { BlurView } from "expo-blur";
 
 import CharactersRow from "./components/CharacterRow";
 import CharacterInfo from "./components/CharacterInfo";
@@ -18,7 +18,7 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const [selectedChar, setSelectedChar] = useState(1);
+  const [selectedChar, setSelectedChar] = useState(null);
 
   const handleSelect = (id) => {
     setSelectedChar(id);
@@ -28,19 +28,26 @@ export default function App() {
     <ApolloProvider client={client}>
       <SpatialNavigationRoot>
         <LinearGradient
-          colors={["#000000", "#002BA1", "#090979"]}
-          locations={[0.4, 0.7, 0.9]}
+          colors={[
+            "rgba(0,0,0,0.9)", 
+            "rgba(0,43,161,0.85)", 
+            "rgba(9,9,121,0.9)", 
+            "rgba(0,0,0,1)",
+          ]}
+          locations={[0, 0.4, 0.8, 1]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
           style={styles.container}
         >
-          <Animated.View style={styles.infoSection}>
+          <View style={styles.infoSection}>
             <CharacterInfo selectedChar={selectedChar} />
-          </Animated.View>
-          <View style={styles.rowSection}>
+          </View>
+          <BlurView intensity={20} style={styles.rowSection}>
             <CharactersRow
               selectedChar={selectedChar}
               handleSelect={handleSelect}
             />
-          </View>
+          </BlurView>
         </LinearGradient>
       </SpatialNavigationRoot>
     </ApolloProvider>
@@ -52,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    fontFamily: "Inter_400Regular"
+    fontFamily: "Inter_400Regular",
   },
   infoSection: {
     flex: 3,
@@ -62,6 +69,5 @@ const styles = StyleSheet.create({
   rowSection: {
     flex: 1.1,
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.4)",
   },
 });
