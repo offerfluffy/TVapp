@@ -62,10 +62,10 @@ const CharacterInfo = ({ selectedChar }) => {
         })
       );
     }
-  }, [data]);
+  }, [data?.character]);
 
   if (loading) {
-    return null;
+    return <></>;
   }
 
   if (error) {
