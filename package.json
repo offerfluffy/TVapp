@@ -15,15 +15,15 @@
     "expo": "^53.0.16",
     "expo-blur": "^14.1.5",
     "expo-font": "~13.3.2",
+    "expo-linear-gradient": "~14.1.5",
     "expo-splash-screen": "~0.30.6",
     "expo-status-bar": "~2.2.2",
     "graphql": "^16.11.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "npm:react-native-tvos@0.79.5-0",
-    "react-tv-space-navigation": "^6.0.0-beta1",
-    "expo-linear-gradient": "~14.1.5",
-    "react-native-reanimated": "~3.17.4"
+    "react-native-reanimated": "~3.17.4",
+    "react-tv-space-navigation": "^6.0.0-beta1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

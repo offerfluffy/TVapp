@@ -4,7 +4,6 @@ import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SpatialNavigationRoot } from "react-tv-space-navigation";
 
-import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 
