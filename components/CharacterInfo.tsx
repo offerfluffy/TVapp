@@ -10,7 +10,7 @@ import Animated, {
   ReduceMotion,
 } from "react-native-reanimated";
 
-import Spinner from "./UI/Spinner";
+import Error from "./UI/Error";
 
 const GET_CHARACTER_BY_ID = gql`
   query GetCharacterByID($id: ID!) {
@@ -71,7 +71,7 @@ const CharacterInfo = ({ selectedChar }) => {
   if (error) {
     return (
       <View style={styles.center}>
-        <Spinner />
+        <Error />
       </View>
     );
   }

@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 
 import CharacterCard from "./CharacterCard";
 import Spinner from "./UI/Spinner";
+import Error from "./UI/Error";
 
 const GET_CHARACTERS = gql`
   query GetCharacters($page: Int!) {
@@ -75,7 +76,7 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
       {isInitialLoading ? (
         <Spinner />
       ) : error ? (
-        <Spinner />
+        <Error />
       ) : (
         <View style={{ position: "relative" }}>
           <SpatialNavigationVirtualizedList
