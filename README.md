@@ -2,10 +2,12 @@
 
 Creates a project that can build for Apple TV and Android TV targets.
 
-This project uses
+This project utilizes:
 
-- the [React Native TV fork](https://github.com/react-native-tvos/react-native-tvos), which supports both phone (Android and iOS) and TV (Android TV and Apple TV) targets
-- the [React Native TV config plugin](https://github.com/react-native-tvos/config-tv/tree/main/packages/config-tv) to allow Expo prebuild to modify the project's native files for TV builds
+- **React Native TV fork** ([react-native-tvos](https://github.com/react-native-tvos/react-native-tvos)), which enables support for both mobile platforms (Android and iOS) and TV platforms (Android TV and Apple TV).
+- **React Native TV config plugin** ([config-tv](https://github.com/react-native-tvos/config-tv/tree/main/packages/config-tv)) to customize native project files during Expo prebuilds, specifically tailored for TV builds.
+- **React TV Space Navigation** ([react-tv-space-navigation](https://github.com/bamlab/react-tv-space-navigation/tree/main)) to provide smooth and intuitive navigation using remote controls on TV devices.
+- **Expo** ([expo.dev](https://expo.dev/)) as the development framework, enabling easier builds and deployment across platforms.
 
 ## 🚀 How to use
 
