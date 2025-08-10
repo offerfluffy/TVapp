@@ -1,6 +1,6 @@
-# TV Example
+# TV application
 
-Creates a project that can build for Apple TV and Android TV targets.
+A project for Apple TV and Android TV targets.
 
 This project utilizes:
 
