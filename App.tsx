@@ -1,16 +1,17 @@
-import { SpatialNavigationRoot } from "react-tv-space-navigation";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { StyleSheet, View, ImageBackground } from "react-native";
-import "./helpers/configureRemote";
+
+import { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { SpatialNavigationRoot } from "react-tv-space-navigation";
+
 import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 
 import CharactersRow from "./components/CharacterRow";
 import CharacterInfo from "./components/CharacterInfo";
-import { useState } from "react";
 
-const bg = require("./assets/images/background/bg.png");
+import "./helpers/configureRemote";
 
 const client = new ApolloClient({
   uri: "https://rickandmortyapi.com/graphql",

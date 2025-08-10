@@ -1,5 +1,6 @@
-import { SpatialNavigationNode } from "react-tv-space-navigation";
 import { Pressable, StyleSheet } from "react-native";
+import { SpatialNavigationNode } from "react-tv-space-navigation";
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,

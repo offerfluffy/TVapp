@@ -1,6 +1,9 @@
-import { StyleSheet, View, Image } from "react-native";
 import { useQuery, gql } from "@apollo/client";
+
 import { useEffect } from "react";
+import { StyleSheet, View, Image } from "react-native";
+
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,

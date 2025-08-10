@@ -1,7 +1,8 @@
-import { SpatialNavigationVirtualizedList } from "react-tv-space-navigation";
-import { StyleSheet, View, Image } from "react-native";
 import { useQuery, gql } from "@apollo/client";
+
 import { useEffect, useState, useRef } from "react";
+import { StyleSheet, View } from "react-native";
+import { SpatialNavigationVirtualizedList } from "react-tv-space-navigation";
 
 import CharacterCard from "./CharacterCard";
 import Spinner from "./UI/Spinner";

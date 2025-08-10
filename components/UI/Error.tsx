@@ -1,11 +1,12 @@
-import { StyleSheet, Image, View } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet, Image } from "react-native";
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   Easing,
 } from "react-native-reanimated";
-import { useEffect } from "react";
 
 const error = require("../../assets/gif/error.gif");
 
