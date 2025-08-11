@@ -30,9 +30,9 @@ This project utilizes:
 3. Run the app on your target device (Android/iOS/TV):
 
    ```bash
-   npm start
+   npm run ios
    # or
-   expo start
+   npm run android
    ```
 
 4. Follow the Expo CLI instructions to launch on the desired platform (emulator, device, or TV).
