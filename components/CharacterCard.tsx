@@ -8,7 +8,6 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   Easing,
-  ReduceMotion,
 } from "react-native-reanimated";
 
 const CharacterCard = ({ img, id, handleSelect }) => {
@@ -23,7 +22,6 @@ const CharacterCard = ({ img, id, handleSelect }) => {
     scale.value = withTiming(to, {
       duration: 340,
       easing: Easing.ease,
-      reduceMotion: ReduceMotion.System,
     });
   };
 

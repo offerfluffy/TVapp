@@ -31,8 +31,11 @@ const GET_CHARACTER_BY_ID = gql`
 `;
 
 const CharacterInfo = ({ selectedChar }) => {
+  const skipQuery = selectedChar == null;
+
   const { loading, error, data } = useQuery(GET_CHARACTER_BY_ID, {
     variables: { id: selectedChar },
+    skip: skipQuery,
   });
 
   const imageOpacity = useSharedValue(0);
@@ -70,6 +73,10 @@ const CharacterInfo = ({ selectedChar }) => {
     }
   }, [data?.character, loading]);
 
+  if (skipQuery) {
+    return <></>;
+  }
+
   if (loading) {
     return <></>;
   }
@@ -82,7 +89,7 @@ const CharacterInfo = ({ selectedChar }) => {
     );
   }
 
-  const { name, image, status, species, origin } = data.character;
+  const { name, image, status, species, origin } = data?.character;
 
   return (
     <View style={styles.container}>
