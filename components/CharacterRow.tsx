@@ -26,7 +26,6 @@ const ITEM_WIDTH = Platform.isTVOS ? 440 : 220;
 
 const CharactersRow = ({ selectedChar, handleSelect }) => {
   const [page, setPage] = useState(1);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [characters, setCharacters] = useState([]);
   const [hasMore, setHasMore] = useState(true);
 
@@ -35,7 +34,6 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
 
   const { loading, error, data } = useQuery(GET_CHARACTERS, {
     variables: { page },
-    onCompleted: () => setIsInitialLoading(false),
   });
 
   useEffect(() => {
@@ -74,34 +72,27 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
   };
 
   return (
-    <>
-      {isInitialLoading ? (
-        <Spinner />
-      ) : error ? (
-        <Error />
-      ) : (
-        <View style={{ position: "relative" }}>
-          <SpatialNavigationVirtualizedList
-            ref={listRef}
-            data={characters}
-            renderItem={({ item }) => (
-              <CharacterCard
-                img={item.image}
-                id={item.id}
-                handleSelect={handleSelect}
-              />
-            )}
-            itemSize={ITEM_WIDTH}
-            orientation="horizontal"
-            onEndReached={handleEndReached}
-            onEndReachedThresholdItemsNumber={4}
-            scrollBehavior="stick-to-start"
-            style={styles.row}
+    <View style={{ position: "relative" }}>
+      <SpatialNavigationVirtualizedList
+        ref={listRef}
+        data={characters}
+        renderItem={({ item }) => (
+          <CharacterCard
+            img={item.image}
+            id={item.id}
+            handleSelect={handleSelect}
           />
-          {loading && <Spinner />}
-        </View>
-      )}
-    </>
+        )}
+        itemSize={ITEM_WIDTH}
+        orientation="horizontal"
+        onEndReached={handleEndReached}
+        onEndReachedThresholdItemsNumber={4}
+        scrollBehavior="stick-to-start"
+        style={styles.row}
+      />
+      {loading && <Spinner />}
+      {error && <Error />}
+    </View>
   );
 };
 
