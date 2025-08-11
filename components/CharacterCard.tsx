@@ -1,6 +1,8 @@
 import { Pressable, StyleSheet } from "react-native";
 import { SpatialNavigationNode } from "react-tv-space-navigation";
 
+import perfectSize from "../helpers/pixelPerfect";
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -49,9 +51,9 @@ const CharacterCard = ({ img, id, handleSelect }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#444",
-    borderRadius: 12,
-    height: 230,
-    width: 410,
+    borderRadius: perfectSize(12),
+    height: perfectSize(230),
+    width: perfectSize(410),
     borderColor: "transparent",
   },
 });

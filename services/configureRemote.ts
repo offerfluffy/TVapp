@@ -9,8 +9,8 @@ SpatialNavigation.configureRemoteControl({
       const mapping = {
         right: Directions.RIGHT,
         left: Directions.LEFT,
-        up: Directions.UP,
-        down: Directions.DOWN,
+        swipeRight: Directions.RIGHT,
+        swipeLeft: Directions.LEFT,
         select: Directions.ENTER,
       };
 

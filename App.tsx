@@ -10,7 +10,9 @@ import { BlurView } from "expo-blur";
 import CharactersRow from "./components/CharacterRow";
 import CharacterInfo from "./components/CharacterInfo";
 
-import "./helpers/configureRemote";
+import perfectSize from "./helpers/pixelPerfect";
+
+import "./services/configureRemote";
 
 const client = new ApolloClient({
   uri: "https://rickandmortyapi.com/graphql",
@@ -23,15 +25,15 @@ export default function App() {
   const handleSelect = (id) => {
     setSelectedChar(id);
   };
-
+  
   return (
     <ApolloProvider client={client}>
       <SpatialNavigationRoot>
         <LinearGradient
           colors={[
-            "rgba(0,0,0,0.9)", 
-            "rgba(0,43,161,0.85)", 
-            "rgba(9,9,121,0.9)", 
+            "rgba(0,0,0,0.9)",
+            "rgba(0,43,161,0.85)",
+            "rgba(9,9,121,0.9)",
             "rgba(0,0,0,1)",
           ]}
           locations={[0, 0.4, 0.8, 1]}
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   infoSection: {
     flex: 3,
     justifyContent: "center",
-    marginHorizontal: 250,
+    marginHorizontal: perfectSize(250),
   },
   rowSection: {
     flex: 1.1,

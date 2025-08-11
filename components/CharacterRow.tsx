@@ -1,8 +1,10 @@
 import { useQuery, gql } from "@apollo/client";
 
 import { useEffect, useState, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import { SpatialNavigationVirtualizedList } from "react-tv-space-navigation";
+
+import perfectSize from "../helpers/pixelPerfect";
 
 import CharacterCard from "./CharacterCard";
 import Spinner from "./UI/Spinner";
@@ -20,7 +22,7 @@ const GET_CHARACTERS = gql`
   }
 `;
 
-const ITEM_WIDTH = 440;
+const ITEM_WIDTH = Platform.isTVOS ? 440 : 220;
 
 const CharactersRow = ({ selectedChar, handleSelect }) => {
   const [page, setPage] = useState(1);
@@ -55,7 +57,6 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
   useEffect(() => {
     if (!characters.length) return;
     if (selectedChar == null) {
-      // No selection yet → auto focus first card
       listRef.current?.focus(0);
     } else {
       const idx = characters.findIndex((c) => c.id === selectedChar);
@@ -93,7 +94,7 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
             itemSize={ITEM_WIDTH}
             orientation="horizontal"
             onEndReached={handleEndReached}
-            onEndReachedThresholdItemsNumber={3}
+            onEndReachedThresholdItemsNumber={4}
             scrollBehavior="stick-to-start"
             style={styles.row}
           />
@@ -106,8 +107,8 @@ const CharactersRow = ({ selectedChar, handleSelect }) => {
 
 const styles = StyleSheet.create({
   row: {
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingHorizontal: perfectSize(20),
+    paddingVertical: perfectSize(30),
   },
 });
 

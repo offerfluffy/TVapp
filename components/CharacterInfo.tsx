@@ -1,8 +1,9 @@
 import { useQuery, gql } from "@apollo/client";
 
 import { useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 
+import perfectSize from "../helpers/pixelPerfect";
 
 import Animated, {
   useSharedValue,
@@ -52,7 +53,6 @@ const CharacterInfo = ({ selectedChar }) => {
 
   useEffect(() => {
     if (data?.character && !loading) {
-
       imageOpacity.value = withTiming(1, {
         duration: 250,
         easing: Easing.ease,
@@ -121,38 +121,38 @@ const CharacterInfo = ({ selectedChar }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: perfectSize(20),
     flexDirection: "row",
     justifyContent: "space-between",
   },
   detailsBlock: {
     flexDirection: "column",
-    maxWidth: 800,
+    maxWidth: perfectSize(800),
   },
   characterImage: {
-    width: 400,
-    height: 400,
-    borderRadius: 12,
+    width: perfectSize(400),
+    height: perfectSize(400),
+    borderRadius: perfectSize(12),
     backgroundColor: "#444",
   },
   characterName: {
-    fontSize: 57,
+    fontSize: perfectSize(57),
     color: "white",
   },
   metaGroup: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 20,
+    marginTop: perfectSize(20),
   },
   metaText: {
-    fontSize: 29,
+    fontSize: perfectSize(29),
     color: "white",
-    marginRight: 20,
+    marginRight: perfectSize(20),
   },
   description: {
-    fontSize: 29,
+    fontSize: perfectSize(29),
     color: "white",
-    marginTop: 25,
+    marginTop: perfectSize(25),
   },
   center: {
     justifyContent: "center",

@@ -22,6 +22,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "npm:react-native-tvos@0.79.5-0",
+    "react-native-pixel-perfect": "^1.0.2",
     "react-native-reanimated": "~3.17.4",
     "react-tv-space-navigation": "^6.0.0-beta1"
   },
